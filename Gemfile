@@ -4,6 +4,7 @@ source 'https://rubygems.org'
 
 gem 'sgcop', github: 'SonicGarden/sgcop', branch: 'main'
 
+gem 'devise'
 gem 'bootsnap', require: false
 gem 'cssbundling-rails'
 gem 'haml-rails'
