@@ -10,9 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_06_10_081225) do
+ActiveRecord::Schema[8.1].define(version: 2026_06_10_091516) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
+
+  create_table "ingredient_stocks", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.date "expire_on", null: false
+    t.bigint "ingredient_id", null: false
+    t.integer "quantity", null: false
+    t.datetime "updated_at", null: false
+    t.index ["ingredient_id"], name: "index_ingredient_stocks_on_ingredient_id"
+  end
 
   create_table "ingredients", force: :cascade do |t|
     t.datetime "created_at", null: false
@@ -34,5 +43,6 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_10_081225) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "ingredient_stocks", "ingredients"
   add_foreign_key "ingredients", "users"
 end
