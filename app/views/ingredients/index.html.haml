@@ -1,0 +1,13 @@
+%h1 食材一覧
+
+%table.table
+  %thead
+    %tr
+      %th 食材名
+      %th 賞味期限
+      %th 数量
+      %th 状態
+  %tbody      
+    - @ingredients.each do |ingredient|
+      %tr
+        %td=ingredient.name
