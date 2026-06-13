@@ -1,13 +1,14 @@
 %h1 食材一覧
-
+=link_to '食材の新規登録', new_ingredient_path
 %table.table
   %thead
     %tr
       %th 食材名
-      %th 賞味期限
-      %th 数量
-      %th 状態
+      %th 削除
+      %th 更新
   %tbody      
     - @ingredients.each do |ingredient|
       %tr
         %td=ingredient.name
+        %td=button_to '食材削除ボタン', ingredient_path(ingredient), method: :delete, data: {turbo_confirm: '本当に削除しますか？'}     
+        %td=link_to '食材名の変更', edit_ingredient_path(ingredient)
