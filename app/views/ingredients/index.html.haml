@@ -1,5 +1,5 @@
 %h1 食材一覧
-=link_to '食材の新規登録', new_ingredient_path
+=link_to '食材の新規登録', new_ingredient_path, class: 'btn btn-success'
 %table.table
   %thead
     %tr
@@ -9,6 +9,6 @@
   %tbody      
     - @ingredients.each do |ingredient|
       %tr
-        %td=ingredient.name
-        %td=button_to '食材削除ボタン', ingredient_path(ingredient), method: :delete, data: {turbo_confirm: '本当に削除しますか？'}     
-        %td=link_to '食材名の変更', edit_ingredient_path(ingredient)
+        %td=link_to ingredient.name, ingredient_path(ingredient), class: 'btn btn-outline-success'
+        %td=button_to '食材削除ボタン', ingredient_path(ingredient), method: :delete, data: {turbo_confirm: '本当に削除しますか？'}, class: 'btn btn-danger'  
+        %td=link_to '食材名の変更', edit_ingredient_path(ingredient), class: 'btn btn-warning'

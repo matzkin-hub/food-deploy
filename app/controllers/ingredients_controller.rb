@@ -1,4 +1,5 @@
 class IngredientsController < ApplicationController
+  before_action :set_id, only: %i[edit update destroy show]
   before_action :authenticate_user!
   def index
     @ingredients = current_user.ingredients.includes(:ingredient_stocks)
@@ -18,11 +19,9 @@ class IngredientsController < ApplicationController
   end
 
   def edit
-    @ingredient = Ingredient.find(params[:id])
   end
 
   def update
-    @ingredient = Ingredient.find(params[:id])
     if @ingredient.update(ingredient_params)
       redirect_to ingredients_path
     else
@@ -31,7 +30,6 @@ class IngredientsController < ApplicationController
   end
 
   def destroy
-    @ingredient = Ingredient.find(params[:id])
     if @ingredient.destroy!
       redirect_to ingredient_path
     else
@@ -39,9 +37,16 @@ class IngredientsController < ApplicationController
     end
   end
 
+  def show
+  end
+
   private
 
   def ingredient_params
     params.require(:ingredient).permit(:name)
+  end
+
+  def set_id
+    @ingredient = Ingredient.find(params[:id])
   end
 end
