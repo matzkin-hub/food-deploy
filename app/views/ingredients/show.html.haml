@@ -5,4 +5,8 @@
     %tr
       %th 賞味期限
       %th 個数
-  %tbody      
+  %tbody 
+  - @ingredient.ingredient_stocks.order(expire_on: :desc).each do |stock|
+    %tr
+      %td= stock.expire_on
+      %td= stock.quantity      

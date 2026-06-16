@@ -6,4 +6,5 @@ Rails.application.routes.draw do
   resources :ingredients do
     resources :ingredient_stocks
   end
+  root to: 'ingredients#index'
 end
