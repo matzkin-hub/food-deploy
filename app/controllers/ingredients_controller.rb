@@ -1,6 +1,5 @@
 class IngredientsController < ApplicationController
   before_action :set_id, only: %i[edit update destroy show]
-  before_action :authenticate_user!
   def index
     @ingredients = current_user.ingredients.includes(:ingredient_stocks)
   end
