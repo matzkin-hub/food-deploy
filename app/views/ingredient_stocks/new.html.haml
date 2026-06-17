@@ -1,5 +1,2 @@
 %h1 賞味期限と個数のレコード作成
-= simple_form_for [@ingredient, @ingredient_stock] do |f|
-  = f.input :quantity
-  = f.input :expire_on
-  = f.button :submit, class: 'btn btn-success'
+= render 'form', ingredient: @ingredient, ingredient_stock: @ingredient_stock 

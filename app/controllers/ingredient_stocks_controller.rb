@@ -15,6 +15,27 @@ class IngredientStocksController < ApplicationController
     end
   end
 
+  def edit
+    @ingredient = Ingredient.find(params[:ingredient_id])
+    @ingredient_stock = @ingredient.ingredient_stocks.find(params[:id])
+  end
+
+  def update
+    @ingredient = Ingredient.find(params[:ingredient_id])
+    @ingredient_stock = @ingredient.ingredient_stocks.find(params[:id])
+    if @ingredient_stock.update(set_params)
+      redirect_to ingredient_path(@ingredient)
+    end
+  end
+
+  def destroy
+    @ingredient = Ingredient.find(params[:ingredient_id])
+    @ingredient_stock = @ingredient.ingredient_stocks.find(params[:id])
+    if @ingredient_stock.destroy
+      redirect_to ingredient_path(@ingredient)
+    end
+  end
+
   private
 
   def set_params
