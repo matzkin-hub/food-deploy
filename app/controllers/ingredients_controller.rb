@@ -1,7 +1,8 @@
 class IngredientsController < ApplicationController
-  before_action :set_id, only: %i[edit update destroy show]
+  before_action :require_correct_user, only: %i[edit update destroy show] # 特定のユーザしかできないアクション
+  before_action :authenticate_user!, only: %i[new create edit update destroy] # ログインしているユーザしかできない
   def index
-    @ingredients = current_user.ingredients.includes(:ingredient_stocks)
+    @ingredients = Ingredient.all
   end
 
   def new
@@ -42,10 +43,10 @@ class IngredientsController < ApplicationController
   private
 
   def ingredient_params
-    params.require(:ingredient).permit(:name)
+    params.expect(ingredient: [:name])
   end
 
-  def set_id
+  def require_correct_user
     @ingredient = Ingredient.find(params[:id])
   end
 end
