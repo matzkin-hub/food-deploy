@@ -1,11 +1,10 @@
 class IngredientStocksController < ApplicationController
+  before_action :require_correct_user, only: %i[new create edit update destroy]
   def new
-    @ingredient = Ingredient.find(params[:ingredient_id])
     @ingredient_stock = @ingredient.ingredient_stocks.build
   end
 
   def create
-    @ingredient = Ingredient.find(params[:ingredient_id])
     @ingredient_stock = @ingredient.ingredient_stocks.build(set_params)
     if @ingredient_stock.save
       redirect_to ingredient_path(@ingredient), notice: '成功です'
@@ -16,12 +15,10 @@ class IngredientStocksController < ApplicationController
   end
 
   def edit
-    @ingredient = Ingredient.find(params[:ingredient_id])
     @ingredient_stock = @ingredient.ingredient_stocks.find(params[:id])
   end
 
   def update
-    @ingredient = Ingredient.find(params[:ingredient_id])
     @ingredient_stock = @ingredient.ingredient_stocks.find(params[:id])
     if @ingredient_stock.update(set_params)
       redirect_to ingredient_path(@ingredient)
@@ -29,7 +26,6 @@ class IngredientStocksController < ApplicationController
   end
 
   def destroy
-    @ingredient = Ingredient.find(params[:ingredient_id])
     @ingredient_stock = @ingredient.ingredient_stocks.find(params[:id])
     if @ingredient_stock.destroy
       redirect_to ingredient_path(@ingredient)
@@ -40,5 +36,12 @@ class IngredientStocksController < ApplicationController
 
   def set_params
     params.expect(ingredient_stock: %i[quantity expire_on])
+  end
+
+  # application_controllerに記述する
+  # ロジックとメソッド名を一致させる
+  # 自分で英語を読む意識を持つ
+  def require_correct_user
+    @ingredient = current_user.ingredients.find(params[:ingredient_id])
   end
 end
