@@ -10,5 +10,6 @@
     - @ingredients.each do |ingredient|
       %tr
         %td=link_to ingredient.name, ingredient_path(ingredient), class: 'btn btn-outline-success'
-        %td=button_to '食材削除ボタン', ingredient_path(ingredient), method: :delete, data: {turbo_confirm: '本当に削除しますか？'}, class: 'btn btn-danger'  
-        %td=link_to '食材名の変更', edit_ingredient_path(ingredient), class: 'btn btn-warning'
+        - if current_user && current_user.id == ingredient.user_id
+          %td=button_to '食材削除ボタン', ingredient_path(ingredient), method: :delete, data: {turbo_confirm: '本当に削除しますか？'}, class: 'btn btn-danger'
+          %td=link_to '食材名の変更', edit_ingredient_path(ingredient), class: 'btn btn-warning'

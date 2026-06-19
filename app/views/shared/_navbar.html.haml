@@ -1,12 +1,12 @@
 .navbar.navbar-expand-lg.bg-body-tertiary
   .container-fluid
-    = link_to 'food', ingredients_path, class: 'navbar-brand'
+    = link_to 'food', ingredients_path, class: 'navbar-brand', class: 'btn btn-light'
     .d-flex
       %ul.navbar-nav.me-auto.mb-2.mb-lg-0
         - if user_signed_in?
           %li.nav-item
-            = button_to 'ログアウト', destroy_user_session_path, method: :delete, date: {turbo: false}
+            = button_to 'ログアウト', destroy_user_session_path, method: :delete, data: {turbo: false}, class: 'btn btn-danger'
         - else
           %li.nav-item
-            = link_to 'ログイン', new_user_session_path
-            = link_to '新規登録', new_user_registration_path
+            = link_to 'ログイン', new_user_session_path, class: 'btn btn-light'
+            = link_to '新規登録', new_user_registration_path, class: 'btn btn-light'

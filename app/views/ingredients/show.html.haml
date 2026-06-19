@@ -12,5 +12,6 @@
     %tr
       %td= stock.expire_on
       %td= stock.quantity 
-      %td= button_to '削除', ingredient_ingredient_stock_path(@ingredient, stock), method: :delete, data: {turbo_confirm: '本当に削除しますか？'},class: 'btn btn-danger'
-      %td= link_to '編集',  edit_ingredient_ingredient_stock_path(@ingredient, stock), class: 'btn btn-info'
+      - if current_user && current_user.id ==  @ingredient.user.id 
+        %td= button_to '削除', ingredient_ingredient_stock_path(@ingredient, stock), method: :delete, data: {turbo_confirm: '本当に削除しますか？'},class: 'btn btn-danger'
+        %td= link_to '編集',  edit_ingredient_ingredient_stock_path(@ingredient, stock), class: 'btn btn-info'
