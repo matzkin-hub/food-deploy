@@ -1,8 +1,8 @@
 class IngredientsController < ApplicationController
-  before_action :require_correct_user, only: %i[edit update destroy] # 特定のユーザしかできないアクション
   before_action :authenticate_user!, only: %i[new create edit update destroy] # ログインしているユーザしかできない
+  before_action :set_id, only: %i[edit update destroy] # 特定のユーザしかできないアクション
   def index
-    @ingredients = Ingredient.all
+    @ingredients = Ingredient.order(created_at: :asc)
   end
 
   def new
@@ -50,7 +50,7 @@ class IngredientsController < ApplicationController
   # application_controllerに記述する
   # ロジックとメソッド名を一致させる
   # 自分で英語を読む意識を持つ
-  def require_correct_user
+  def set_id
     @ingredient = current_user.ingredients.find(params[:id])
   end
 end

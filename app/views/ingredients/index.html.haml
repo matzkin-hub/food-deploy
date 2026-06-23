@@ -1,15 +1,18 @@
-%h1 食材一覧
-=link_to '食材の新規登録', new_ingredient_path, class: 'btn btn-success'
-%table.table
-  %thead
-    %tr
-      %th 食材名
-      %th 削除
-      %th 更新
-  %tbody      
+.container
+  .navbar.navbar-expand-lg.bg-white
+    .container-fluid
+      %h1 食材一覧
+      - if current_user
+        = link_to '食材の新規登録', new_ingredient_path, class: 'btn btn-success'
+  .d-flex.justify-content-center.align-items-center.flex-wrap.mx-auto.p-3
     - @ingredients.each do |ingredient|
-      %tr
-        %td=link_to ingredient.name, ingredient_path(ingredient), class: 'btn btn-outline-success'
-        - if current_user && current_user.id == ingredient.user_id
-          %td=button_to '食材削除ボタン', ingredient_path(ingredient), method: :delete, data: {turbo_confirm: '本当に削除しますか？'}, class: 'btn btn-danger'
-          %td=link_to '食材名の変更', edit_ingredient_path(ingredient), class: 'btn btn-warning'
+      .col-lg-6.mb-4.text-center.w-100
+        .card.h-100
+          .card-body.d-grid.gap-2.col-6.mx-auto
+            %h4.card-title.fs-1
+              = ingredient.name
+            = link_to '詳細', ingredient_path(ingredient), class: 'btn btn-outline-success mt-3'
+            - if current_user && current_user.id == ingredient.user_id
+              =button_to '食材削除ボタン', ingredient_path(ingredient), method: :delete, data: {turbo_confirm: '本当に削除しますか？'}, class: 'btn btn-outline-danger',form: {class: 'd-grid'}
+              =link_to '食材名の変更', edit_ingredient_path(ingredient), class: 'btn btn-outline-warning'
+
