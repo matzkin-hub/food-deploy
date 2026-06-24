@@ -6,13 +6,15 @@
         = link_to '食材の新規登録', new_ingredient_path, class: 'btn btn-success'
   .d-flex.justify-content-center.align-items-center.flex-wrap.mx-auto.p-3
     - @ingredients.each do |ingredient|
+      - earliest_stock = ingredient.ingredient_stocks.order(:expire_on).first
+      - color = earliest_stock ? earliest_stock.status_color : ''
       .col-lg-6.mb-4.text-center.w-100
-        .card.h-100
+        .card.h-100{class: "border-#{color} border-3"}
           .card-body.d-grid.gap-2.col-6.mx-auto
             %h4.card-title.fs-1
               = ingredient.name
-            = link_to '詳細', ingredient_path(ingredient), class: 'btn btn-outline-success mt-3'
+            = link_to '在庫', ingredient_path(ingredient), class: 'btn btn-outline-success mt-3'
             - if current_user && current_user.id == ingredient.user_id
-              =button_to '食材削除ボタン', ingredient_path(ingredient), method: :delete, data: {turbo_confirm: '本当に削除しますか？'}, class: 'btn btn-outline-danger',form: {class: 'd-grid'}
-              =link_to '食材名の変更', edit_ingredient_path(ingredient), class: 'btn btn-outline-warning'
+              =button_to '食材削除', ingredient_path(ingredient), method: :delete, data: {turbo_confirm: '本当に削除しますか？'}, class: 'btn btn-outline-danger',form: {class: 'd-grid'}
+              =link_to '食材名変更', edit_ingredient_path(ingredient), class: 'btn btn-outline-warning'
 

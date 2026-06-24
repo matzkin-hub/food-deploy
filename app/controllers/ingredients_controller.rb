@@ -2,7 +2,7 @@ class IngredientsController < ApplicationController
   before_action :authenticate_user!, only: %i[new create edit update destroy] # ログインしているユーザしかできない
   before_action :set_id, only: %i[edit update destroy] # 特定のユーザしかできないアクション
   def index
-    @ingredients = Ingredient.order(created_at: :asc)
+    @ingredients = Ingredient.left_joins(:ingredient_stocks).includes(:ingredient_stocks).group("ingredients.id").order("MIN(ingredient_stocks.expire_on) ASC NULLS LAST")
   end
 
   def new
