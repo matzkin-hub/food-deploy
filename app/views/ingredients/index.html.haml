@@ -9,7 +9,7 @@
       - earliest_stock = ingredient.ingredient_stocks.order(:expire_on).first
       - color = earliest_stock ? earliest_stock.status_color : ''
       .col-lg-6.mb-4.text-center.w-100
-        .card.h-100{class: "border-#{color} border-3"}
+        .card.h-100{class: "bg-#{color}-subtle border-3"}
           .card-body.d-grid.gap-2.col-6.mx-auto
             %h4.card-title.fs-1
               = ingredient.name

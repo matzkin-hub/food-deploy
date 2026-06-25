@@ -1,23 +1,24 @@
-%h1 詳細画面
-- if current_user && current_user.id ==  @ingredient.user.id
-  =link_to '賞味期限/個数', new_ingredient_ingredient_stock_path(@ingredient), class: 'btn btn-success'
-%table.table.table-hover
-  %thead
-    %tr
-      %th 賞味期限
-      %th 購入日
-      %th 更新日
-      %th 個数
-      - if current_user && current_user.id ==  @ingredient.user.id
-        %th 削除
-        %th 編集
-  %tbody
-  - @ingredient.ingredient_stocks.order(expire_on: :asc, updated_at: :desc).each do |stock|
-    %tr
-      %td= stock.expire_on
-      %td= stock.created_at
-      %td= stock.updated_at
-      %td= stock.quantity
-      - if current_user && current_user.id ==  @ingredient.user.id
-        %td= button_to '削除', ingredient_ingredient_stock_path(@ingredient, stock), method: :delete, data: {turbo_confirm: '本当に削除しますか？'},class: 'btn btn-danger'
-        %td= link_to '編集',  edit_ingredient_ingredient_stock_path(@ingredient, stock), class: 'btn btn-info'
+.container
+  %h1 詳細画面
+  - if current_user && current_user.id ==  @ingredient.user.id
+    =link_to '賞味期限/個数', new_ingredient_ingredient_stock_path(@ingredient), class: 'btn btn-success'
+  %table.table.table-hover.table-bordered
+    %thead
+      %tr
+        %th 賞味期限
+        %th 購入日
+        %th 更新日
+        %th 個数
+        - if current_user && current_user.id ==  @ingredient.user.id
+          %th 削除
+          %th 編集
+    %tbody
+    - @ingredient.ingredient_stocks.order(expire_on: :asc, updated_at: :desc).each do |stock|
+      %tr
+        %td= stock.expire_on
+        %td= stock.created_at
+        %td= stock.updated_at
+        %td= stock.quantity
+        - if current_user && current_user.id ==  @ingredient.user.id
+          %td= button_to '削除', ingredient_ingredient_stock_path(@ingredient, stock), method: :delete, data: {turbo_confirm: '本当に削除しますか？'},class: 'btn btn-danger'
+          %td= link_to '編集',  edit_ingredient_ingredient_stock_path(@ingredient, stock), class: 'btn btn-info'
