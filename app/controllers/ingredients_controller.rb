@@ -1,8 +1,8 @@
 class IngredientsController < ApplicationController
-  before_action :set_id, only: %i[edit update destroy show]
-  before_action :authenticate_user!
+  before_action :authenticate_user!, only: %i[new create edit update destroy] # ログインしているユーザしかできない
+  before_action :set_id, only: %i[edit update destroy] # 特定のユーザしかできないアクション
   def index
-    @ingredients = current_user.ingredients.includes(:ingredient_stocks)
+    @ingredients = Ingredient.left_joins(:ingredient_stocks).includes(:ingredient_stocks).group("ingredients.id").order("MIN(ingredient_stocks.expire_on) ASC NULLS LAST")
   end
 
   def new
@@ -38,15 +38,19 @@ class IngredientsController < ApplicationController
   end
 
   def show
+    @ingredient = Ingredient.find(params[:id])
   end
 
   private
 
   def ingredient_params
-    params.require(:ingredient).permit(:name)
+    params.expect(ingredient: [:name])
   end
 
+  # application_controllerに記述する
+  # ロジックとメソッド名を一致させる
+  # 自分で英語を読む意識を持つ
   def set_id
-    @ingredient = Ingredient.find(params[:id])
+    @ingredient = current_user.ingredients.find(params[:id])
   end
 end
