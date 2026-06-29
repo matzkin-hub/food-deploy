@@ -1,0 +1,11 @@
+ja:
+  activerecord:
+    attributes:
+      ingredient:
+        name: 食品名
+      ingredient_stock:
+        quantity: 個数
+        expire_on: 賞味期
+
+
+

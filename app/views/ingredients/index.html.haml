@@ -1,20 +1,20 @@
 .container
   .navbar.navbar-expand-lg.bg-white
     .container-fluid
-      %h1 食材一覧
-      - if current_user
-        = link_to '食材の新規登録', new_ingredient_path, class: 'btn btn-success'
-  .d-flex.justify-content-center.align-items-center.flex-wrap.mx-auto.p-3
+  %h1 食材一覧
+  = paginate @ingredients
+  - if current_user
+    = link_to '食材の新規登録', new_ingredient_path, class: 'btn btn-success'
+  .row.g-3.align-items-start
     - @ingredients.each do |ingredient|
       - earliest_stock = ingredient.ingredient_stocks.order(:expire_on).first
       - color = earliest_stock ? earliest_stock.status_color : ''
-      .col-lg-6.mb-4.text-center.w-100
-        .card.h-100{class: "bg-#{color}-subtle border-3"}
+      .col-lg-3.mb-6
+        .card{class: " bg-#{color}-subtle border-3", style: 'min-height: 230px;'}
           .card-body.d-grid.gap-2.col-6.mx-auto
-            %h4.card-title.fs-1
+            .card-title.fs-4.text-truncate
               = ingredient.name
-            = link_to '在庫', ingredient_path(ingredient), class: 'btn btn-outline-success mt-3'
+            = link_to '在庫', ingredient_path(ingredient), class: 'btn btn-outline-success mt-3 btn-sm'
             - if current_user && current_user.id == ingredient.user_id
               =button_to '食材削除', ingredient_path(ingredient), method: :delete, data: {turbo_confirm: '本当に削除しますか？'}, class: 'btn btn-outline-danger',form: {class: 'd-grid'}
-              =link_to '食材名変更', edit_ingredient_path(ingredient), class: 'btn btn-outline-warning'
-
+              =link_to '食材名変更', edit_ingredient_path(ingredient), class: 'btn btn-outline-warning btn-sm'

@@ -1,11 +1,27 @@
-# frozen_string_literal: true
+User.destroy_all
 
-# This file should ensure the existence of records required to run the application in every environment (production,
-# development, test). The code here should be idempotent so that it can be executed at any point in every environment.
-# The data can then be loaded with the bin/rails db:seed command (or created alongside the database with db:setup).
-#
-# Example:
-#
-#   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
-#     MovieGenre.find_or_create_by!(name: genre_name)
-#   end
+10.times do
+  User.create!(
+    email: Faker::Internet.email,
+    password: 'password'
+  )
+end
+
+User.find_each do |user|
+  3.times do
+    Ingredient.create!(
+      name: Faker::Name.name,
+      user: user
+    )
+  end
+end
+
+Ingredient.find_each do |ingredient|
+  3.times do
+    IngredientStock.create!(
+      expire_on: Faker::Date.between(from: Date.current, to: 1.month.from_now),
+      quantity: Faker::Number.number(digits: 1),
+      ingredient: ingredient
+    )
+  end
+end
