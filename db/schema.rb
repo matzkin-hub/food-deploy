@@ -10,39 +10,39 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_06_10_091516) do
+ActiveRecord::Schema[8.1].define(version: 20_260_610_091_516) do
   # These are extensions that must be enabled in order to support this database
-  enable_extension "pg_catalog.plpgsql"
+  enable_extension 'pg_catalog.plpgsql'
 
-  create_table "ingredient_stocks", force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.date "expire_on", null: false
-    t.bigint "ingredient_id", null: false
-    t.integer "quantity", null: false
-    t.datetime "updated_at", null: false
-    t.index ["ingredient_id"], name: "index_ingredient_stocks_on_ingredient_id"
+  create_table 'ingredient_stocks', force: :cascade do |t|
+    t.datetime 'created_at', null: false
+    t.date 'expire_on', null: false
+    t.bigint 'ingredient_id', null: false
+    t.integer 'quantity', null: false
+    t.datetime 'updated_at', null: false
+    t.index ['ingredient_id'], name: 'index_ingredient_stocks_on_ingredient_id'
   end
 
-  create_table "ingredients", force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.string "name", null: false
-    t.datetime "updated_at", null: false
-    t.bigint "user_id", null: false
-    t.index ["user_id"], name: "index_ingredients_on_user_id"
+  create_table 'ingredients', force: :cascade do |t|
+    t.datetime 'created_at', null: false
+    t.string 'name', null: false
+    t.datetime 'updated_at', null: false
+    t.bigint 'user_id', null: false
+    t.index ['user_id'], name: 'index_ingredients_on_user_id'
   end
 
-  create_table "users", force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.string "email", default: "", null: false
-    t.string "encrypted_password", default: "", null: false
-    t.datetime "remember_created_at"
-    t.datetime "reset_password_sent_at"
-    t.string "reset_password_token"
-    t.datetime "updated_at", null: false
-    t.index ["email"], name: "index_users_on_email", unique: true
-    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+  create_table 'users', force: :cascade do |t|
+    t.datetime 'created_at', null: false
+    t.string 'email', default: '', null: false
+    t.string 'encrypted_password', default: '', null: false
+    t.datetime 'remember_created_at'
+    t.datetime 'reset_password_sent_at'
+    t.string 'reset_password_token'
+    t.datetime 'updated_at', null: false
+    t.index ['email'], name: 'index_users_on_email', unique: true
+    t.index ['reset_password_token'], name: 'index_users_on_reset_password_token', unique: true
   end
 
-  add_foreign_key "ingredient_stocks", "ingredients"
-  add_foreign_key "ingredients", "users"
+  add_foreign_key 'ingredient_stocks', 'ingredients'
+  add_foreign_key 'ingredients', 'users'
 end

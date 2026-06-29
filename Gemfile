@@ -4,9 +4,9 @@ source 'https://rubygems.org'
 
 gem 'sgcop', github: 'SonicGarden/sgcop', branch: 'main'
 
-gem 'devise'
 gem 'bootsnap', require: false
 gem 'cssbundling-rails'
+gem 'devise'
 gem 'haml-rails'
 gem 'html2haml'
 gem 'image_processing', '~> 1.2'
@@ -22,6 +22,9 @@ gem 'stimulus-rails'
 gem 'thruster', require: false
 gem 'turbo-rails'
 gem 'tzinfo-data', platforms: %i[windows jruby]
+gem 'kaminari'
+gem 'faker'
+gem 'rails-i18n'
 
 group :development, :test do
   gem 'brakeman', require: false

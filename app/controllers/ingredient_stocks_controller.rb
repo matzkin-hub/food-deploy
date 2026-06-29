@@ -1,5 +1,6 @@
 class IngredientStocksController < ApplicationController
-  before_action :require_correct_user, only: %i[new create edit update destroy]
+  before_action :authenticate_user!
+  before_action :set_id, only: %i[new create edit update destroy]
   def new
     @ingredient_stock = @ingredient.ingredient_stocks.build
   end
@@ -20,16 +21,16 @@ class IngredientStocksController < ApplicationController
 
   def update
     @ingredient_stock = @ingredient.ingredient_stocks.find(params[:id])
-    if @ingredient_stock.update(set_params)
-      redirect_to ingredient_path(@ingredient)
-    end
+    return unless @ingredient_stock.update(set_params)
+
+    redirect_to ingredient_path(@ingredient)
   end
 
   def destroy
     @ingredient_stock = @ingredient.ingredient_stocks.find(params[:id])
-    if @ingredient_stock.destroy
-      redirect_to ingredient_path(@ingredient)
-    end
+    return unless @ingredient_stock.destroy
+
+    redirect_to ingredient_path(@ingredient)
   end
 
   private
@@ -41,7 +42,7 @@ class IngredientStocksController < ApplicationController
   # application_controllerに記述する
   # ロジックとメソッド名を一致させる
   # 自分で英語を読む意識を持つ
-  def require_correct_user
+  def set_id
     @ingredient = current_user.ingredients.find(params[:ingredient_id])
   end
 end
