@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 User.destroy_all
 
 10.times do

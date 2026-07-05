@@ -1,5 +1,5 @@
 .container
-  %h1 詳細画面
+  %h1= @ingredient.name
   - if current_user && current_user.id ==  @ingredient.user.id
     =link_to '賞味期限/個数', new_ingredient_ingredient_stock_path(@ingredient), class: 'btn btn-success'
   %table.table.table-hover.table-bordered

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class IngredientsController < ApplicationController
   before_action :authenticate_user!, only: %i[index show new create edit update destroy] # ログインしているユーザしかできない
   before_action :set_id, only: %i[edit update destroy] # 特定のユーザしかできないアクション
@@ -12,7 +14,7 @@ class IngredientsController < ApplicationController
   def create
     @ingredient = current_user.ingredients.build(ingredient_params)
     if @ingredient.save
-      redirect_to ingredients_path, notice: '食材の登録に成功しました'
+      redirect_to ingredient_path(@ingredient), notice: '食材の登録に成功しました'
     else
       flash.now[:alert] = '食材の登録に失敗しました'
       render :new, status: :unprocessable_entity
@@ -23,7 +25,7 @@ class IngredientsController < ApplicationController
 
   def update
     if @ingredient.update(ingredient_params)
-      redirect_to ingredients_path, notice: '食材名の変更に成功しました'
+      redirect_to ingredient_path(@ingredient), notice: '食材名の変更に成功しました'
     else
       render :edit
     end
@@ -44,7 +46,7 @@ class IngredientsController < ApplicationController
   private
 
   def ingredient_params
-    params.expect(ingredient: [:name])
+    params.expect(ingredient: %i[name image])
   end
 
   # application_controllerに記述する
