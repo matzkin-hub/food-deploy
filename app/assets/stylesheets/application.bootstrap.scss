@@ -2,11 +2,28 @@
 @import 'bootstrap-icons/font/bootstrap-icons';
 
 .form-container {
-    max-width: 500px;
-    margin: 0 auto;
-    padding: 2rem;
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 2rem;
 }
 
 .font-size {
-    font-size: 2rem
+  font-size: 2rem
+}
+
+.card-icon {
+  opacity: 0;
+  transition: opacity 0.175s ease;
+}
+
+.parent-box:hover .card-icon {
+  opacity: 1;
+}
+
+.not-link-style {
+  text-decoration: none !important;
+}
+
+.bg-color {
+  background-color: #fce2c4;
 }

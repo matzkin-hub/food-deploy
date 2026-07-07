@@ -1,2 +1,5 @@
 .font-size 食材名編集
 = render 'form', ingredient: @ingredient
+.d-flex.justify-content-center
+  = button_to ingredient_path(@ingredient), method: :delete, data: {turbo_confirm: '本当に削除しますか？'} , class: 'btn btn-outline-danger' do
+    %i.bi.bi-trash3-fill

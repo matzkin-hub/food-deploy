@@ -1,20 +1,21 @@
 .container
   .navbar.navbar-expand-lg.bg-white
     .container-fluid
-  %h1 食材一覧
   = paginate @ingredients
   - if current_user
-    = link_to '食材の新規登録', new_ingredient_path, class: 'btn btn-success'
-  .row.g-3.align-items-start
+    = link_to '食材の新規登録', new_ingredient_path, class: 'btn btn-success mb-3'
+  .row.g-3
     - @ingredients.each do |ingredient|
       - earliest_stock = ingredient.ingredient_stocks.order(:expire_on).first
       - color = earliest_stock ? earliest_stock.status_color : ''
-      .col-lg-3.mb-6
-        .card{class: " bg-#{color}-subtle border-3", style: 'min-height: 230px;'}
-          .card-body.d-grid.gap-2.col-6.mx-auto
-            .card-title.fs-4.text-truncate
-              = ingredient.name
-            = link_to '在庫', ingredient_path(ingredient), class: 'btn btn-outline-success mt-3 btn-sm'
+
+      .col-lg-3.mb-6.text-center.justify-content-center
+        .card.position-relative{class: " bg-#{color}-subtle border-3 parent-box", style: 'min-height: 280px;'}
+          - if ingredient.image.attached?
+            = image_tag ingredient.image, class: 'card-img-top', style: 'height: 150px; object-fit: cover;'
+          .card-body.d-flex.flex-column.justify-content-end
+            = link_to ingredient.name, ingredient_path(ingredient), class: 'stretched-link card-title fs-4 text-truncate d-block not-link-style'
             - if current_user && current_user.id == ingredient.user_id
-              =button_to '食材削除', ingredient_path(ingredient), method: :delete, data: {turbo_confirm: '本当に削除しますか？'}, class: 'btn btn-outline-danger',form: {class: 'd-grid'}
-              =link_to '食材名変更', edit_ingredient_path(ingredient), class: 'btn btn-outline-warning btn-sm'
+              .d-flex.gap-3.justify-content-end.card-icon.position-relative{style: 'z-index: 5;'}
+                = link_to edit_ingredient_path(ingredient), class: 'btn btn-outline-success position-relative', style: 'z-index: 5;' do
+                  %i.bi.bi-pencil-fill

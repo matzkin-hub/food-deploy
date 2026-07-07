@@ -1,4 +1,5 @@
 .form-container
   = simple_form_for ingredient do |f|
     =f.input :name
+    = f.input :image, as: :file, label: '画像'
     =f.button :submit, class: 'btn btn-success w-100'

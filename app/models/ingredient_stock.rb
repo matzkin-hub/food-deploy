@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class IngredientStock < ApplicationRecord
   belongs_to :ingredient
   validates :expire_on, presence: true
