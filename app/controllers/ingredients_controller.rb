@@ -1,8 +1,10 @@
+# frozen_string_literal: true
+
 class IngredientsController < ApplicationController
-  before_action :authenticate_user!, only: %i[index show new create edit update destroy] # ログインしているユーザしかできない
+  before_action :authenticate_user! # ログインしているユーザしかできない
   before_action :set_id, only: %i[edit update destroy] # 特定のユーザしかできないアクション
   def index
-    @ingredients = Ingredient.left_joins(:ingredient_stocks).includes(:ingredient_stocks).group('ingredients.id').order('MIN(ingredient_stocks.expire_on) ASC NULLS LAST').page(params[:page]).per(12)
+    @ingredients = current_user.ingredients.left_joins(:ingredient_stocks).includes(:ingredient_stocks).group('ingredients.id').order('MIN(ingredient_stocks.expire_on) ASC NULLS LAST').page(params[:page]).per(8)
   end
 
   def new
@@ -19,11 +21,12 @@ class IngredientsController < ApplicationController
     end
   end
 
-  def edit; end
+  def edit
+  end
 
   def update
     if @ingredient.update(ingredient_params)
-      redirect_to ingredients_path, notice: '食材名の変更に成功しました'
+      redirect_to ingredient_path(@ingredient), notice: '食材名の変更に成功しました'
     else
       render :edit
     end
@@ -31,7 +34,7 @@ class IngredientsController < ApplicationController
 
   def destroy
     if @ingredient.destroy!
-      redirect_to ingredient_path, notice: '食材一覧から食材を削除しました'
+      redirect_to ingredients_path, notice: '食材一覧から食材を削除しました'
     else
       render :index
     end
@@ -39,12 +42,16 @@ class IngredientsController < ApplicationController
 
   def show
     @ingredient = Ingredient.find(params[:id])
+
+    if @ingredient.user != current_user
+      redirect_to ingredients_path
+    end
   end
 
   private
 
   def ingredient_params
-    params.expect(ingredient: [:name])
+    params.expect(ingredient: %i[name image])
   end
 
   # application_controllerに記述する
