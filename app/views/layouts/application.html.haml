@@ -7,7 +7,11 @@
     %meta{:content => "yes", :name => "apple-mobile-web-app-capable"}/
     %meta{:content => "Matzkin Food Management App", :name => "application-name"}/
     %meta{:content => "yes", :name => "mobile-web-app-capable"}/
-    = favicon_link_tag 'favicon/photo-1641130382532-2514a6c93859.png'
+    %link{:href => "/icon.png", :rel => "icon", :type => "image/png"}/
+    %link{:href => "/icon.svg", :rel => "icon", :type => "image/svg+xml"}/
+    %link{:href => "/icon.png", :rel => "apple-touch-icon"}/
+    = javascript_include_tag "application", "data-turbo-track": "reload", type: "module"
+    = favicon_link_tag 'favicon/image_ee0385f.png'
     = csrf_meta_tags
     = csp_meta_tag
     = yield :head
