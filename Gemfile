@@ -10,7 +10,7 @@ gem 'devise'
 gem 'faker'
 gem 'haml-rails'
 gem 'html2haml'
-gem 'image_processing', '~> 1.2'
+gem 'image_processing', '~> 2.0'
 gem 'jbuilder'
 gem 'jsbundling-rails'
 gem 'kamal', require: false
