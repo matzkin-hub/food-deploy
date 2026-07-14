@@ -1,12 +1,15 @@
-.navbar.navbar-expand-lg.bg-body-tertiary
-  .container-fluid
-    = link_to 'food', ingredients_path, class: 'navbar-brand btn btn-light'
-    .d-flex
-      %ul.navbar-nav.me-auto.mb-2.mb-lg-0
-        - if user_signed_in?
-          %li.nav-item
-            = button_to 'ログアウト', destroy_user_session_path, method: :delete, data: {turbo: false}, class: 'btn btn-danger'
-        - else
-          %li.nav-item
-            = link_to 'ログイン', new_user_session_path, class: 'btn btn-light'
-            = link_to '新規登録', new_user_registration_path, class: 'btn btn-light'
+%header.sticky-top
+  .navbar.navbar-expand-lg.bg-body-tertiary
+    .container-fluid
+      = link_to 'food', ingredients_path, class: 'navbar-brand btn btn-light'
+      %button.navbar-toggler{ type: "button", data: {bs_toggle: "collapse", bs_target: "#navbarNavDropdown", aria_controls: "navbarNavDropdown", aria_expanded: "false", aria_label: "Toggle navigation"} }
+        %span.navbar-toggler-icon
+      #navbarNavDropdown.collapse.navbar-collapse
+        %ul.navbar-nav.mb-2.ms-auto.text-end.my-3
+          - if user_signed_in?
+            %li.nav-item
+              = button_to 'ログアウト', destroy_user_session_path, method: :delete, data: {turbo: false}, class: 'btn btn-danger'
+          - else
+            %li.nav-item.d-flex.flex-column
+              = link_to 'ログイン', new_user_session_path, class: 'btn btn-light'
+              = link_to '新規登録', new_user_registration_path, class: 'btn btn-light'

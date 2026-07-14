@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 class IngredientStocksController < ApplicationController
-  before_action :authenticate_user!
   before_action :set_id, only: %i[new create edit update destroy]
   def new
     @ingredient_stock = @ingredient.ingredient_stocks.build
