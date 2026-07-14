@@ -1,5 +1,5 @@
 .form-container
   = simple_form_for [ingredient, ingredient_stock] do |f|
-    = f.input :quantity
+    = f.input :quantity, as: :select, collection: (1..99)
     = f.input :expire_on
     = f.button :submit, class: 'btn btn-success w-100'

@@ -27,3 +27,20 @@
 .bg-color {
   background-color: #fce2c4;
 }
+
+
+@media screen and (max-width: 600px) {
+  .no-wrap {
+    white-space : nowrap;
+  }
+
+  .card-icon {
+    opacity: 0;
+    transition: opacity 0.8s ease;
+  }
+
+  .parent-box.in-view .card-icon {
+    opacity: 1;
+  }
+
+}

@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 class IngredientsController < ApplicationController
-  before_action :authenticate_user! # ログインしているユーザしかできない
   before_action :set_id, only: %i[edit update destroy] # 特定のユーザしかできないアクション
   def index
     @ingredients = current_user.ingredients.left_joins(:ingredient_stocks).includes(:ingredient_stocks).group('ingredients.id').order('MIN(ingredient_stocks.expire_on) ASC NULLS LAST').page(params[:page]).per(8)
@@ -42,10 +41,7 @@ class IngredientsController < ApplicationController
 
   def show
     @ingredient = Ingredient.find(params[:id])
-
-    if @ingredient.user != current_user
-      redirect_to ingredients_path
-    end
+    redirect_to ingredients_path and return unless @ingredient.user == current_user
   end
 
   private
