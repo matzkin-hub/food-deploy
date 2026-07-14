@@ -28,6 +28,10 @@
   background-color: #fce2c4;
 }
 
+.width-card {
+  width: auto;
+  
+}
 
 @media screen and (max-width: 600px) {
   .no-wrap {
@@ -42,5 +46,4 @@
   .parent-box.in-view .card-icon {
     opacity: 1;
   }
-
 }
