@@ -5,7 +5,7 @@ ja:
         name: 食品名
       ingredient_stock:
         quantity: 個数
-        expire_on: 賞味期
+        expire_on: 賞味期限
       user:
         confirmation_sent_at: パスワード確認送信時刻
         confirmation_token: パスワード確認用トークン
