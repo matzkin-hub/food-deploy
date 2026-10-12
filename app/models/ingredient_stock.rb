@@ -20,4 +20,15 @@ class IngredientStock < ApplicationRecord
       'secondary'
     end
   end
+
+  def remaining_days_label
+    days = (expire_on - Date.current).to_i
+    if days.negative?
+      "#{days.abs}日超過"
+    elsif days.zero?
+      '今日まで'
+    else
+      "あと#{days}日"
+    end
+  end
 end
