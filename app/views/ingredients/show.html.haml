@@ -1,4 +1,7 @@
 .container
+  = link_to ingredients_path, class: 'btn btn-outline-secondary mb-3' do
+    %i.bi.bi-arrow-left
+    戻る
   %h1= @ingredient.name
   - if current_user && current_user.id ==  @ingredient.user.id
     =link_to '賞味期限/個数', new_ingredient_ingredient_stock_path(@ingredient), class: 'btn btn-success mb-3 mt-3'
