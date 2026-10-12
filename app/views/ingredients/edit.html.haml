@@ -1,8 +1,9 @@
-= link_to ingredient_path(@ingredient), class: 'btn btn-outline-secondary mb-3' do
+= link_to ingredient_path(@ingredient), class: pop_btn('light', 'mb-4') do
   %i.bi.bi-arrow-left
   戻る
-.font-size 食材名編集
+%div
+  .d-inline-block.bg-warning.border.border-3.border-dark.rounded-pill.px-4.py-2.fs-4.fw-bolder.shadow-sm.mb-4 食材名編集
 = render 'form', ingredient: @ingredient
-.d-flex.justify-content-center
-  = button_to ingredient_path(@ingredient), method: :delete, data: {turbo_confirm: '本当に削除しますか？'} , class: 'btn btn-outline-danger' do
+.d-flex.justify-content-center.mt-4
+  = button_to ingredient_path(@ingredient), method: :delete, data: {turbo_confirm: '本当に削除しますか？'} , class: pop_btn('danger') do
     %i.bi.bi-trash3-fill

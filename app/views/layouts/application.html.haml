@@ -4,19 +4,22 @@
     %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
     %title= content_for(:title) || "Matzkin Food Management App"
     %meta{:content => "width=device-width,initial-scale=1", :name => "viewport"}/
+    %meta{:content => "#c9e53d", :name => "theme-color"}/
     %meta{:content => "yes", :name => "apple-mobile-web-app-capable"}/
     %meta{:content => "Matzkin Food Management App", :name => "application-name"}/
     %meta{:content => "yes", :name => "mobile-web-app-capable"}/
-    %link{:href => "/icon.png", :rel => "icon", :type => "image/png"}/
+    %link{:href => "/favicon.ico", :rel => "icon", :sizes => "any"}/
+    %meta{:content => "default", :name => "apple-mobile-web-app-status-bar-style"}/
+    %link{:href => pwa_manifest_path(format: :json), :rel => "manifest"}/
     %link{:href => "/icon.svg", :rel => "icon", :type => "image/svg+xml"}/
-    %link{:href => "/icon.png", :rel => "apple-touch-icon"}/
+    %link{:href => "/apple-touch-icon.png", :rel => "apple-touch-icon"}/
     = javascript_include_tag "application", "data-turbo-track": "reload", type: "module"
-    = favicon_link_tag 'favicon/image_ee0385f.png'
     = csrf_meta_tags
     = csp_meta_tag
     = yield :head
     = stylesheet_link_tag :app, "data-turbo-track": "reload"
-  %body
-    = render 'shared/flash'
+  %body.bg-warning-subtle.min-vh-100
     = render 'shared/navbar'
-    = yield
+    = render 'shared/flash'
+    %main.container.pt-4.pb-5
+      = yield

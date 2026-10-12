@@ -1,2 +1,6 @@
-.font-size 食材追加
+= link_to ingredients_path, class: pop_btn('light', 'mb-4') do
+  %i.bi.bi-arrow-left
+  戻る
+%div
+  .d-inline-block.bg-warning.border.border-3.border-dark.rounded-pill.px-4.py-2.fs-4.fw-bolder.shadow-sm.mb-4 食材追加
 = render 'form', ingredient: @ingredient
