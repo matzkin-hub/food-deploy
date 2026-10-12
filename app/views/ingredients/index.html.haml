@@ -6,15 +6,39 @@
     = link_to '食材の新規登録', new_ingredient_path, class: 'btn btn-success mb-3'
   .row.g-3
     - @ingredients.each do |ingredient|
-      - earliest_stock = ingredient.ingredient_stocks.order(:expire_on).first
-      - color = earliest_stock ? earliest_stock.status_color : ''
+      - earliest_stock = ingredient.earliest_stock
+      - color = earliest_stock ? earliest_stock.status_color : 'secondary'
 
       .col-lg-3.mb-6.text-center.justify-content-center
-        .card.position-relative{class: " bg-#{color}-subtle border-3 parent-box", style: 'min-height: 280px;'}
+        .card.position-relative.h-100{class: " bg-#{color}-subtle border-3 parent-box", style: 'min-height: 280px;'}
           - if ingredient.image.attached?
             = image_tag ingredient.image, class: 'card-img-top', style: 'height: 150px; object-fit: cover;'
           .card-body.d-flex.flex-column.justify-content-end
             = link_to ingredient.name, ingredient_path(ingredient), class: 'stretched-link card-title fs-4 text-truncate d-block not-link-style'
+            %dl.stock-summary
+              .d-flex.align-items-center.justify-content-between
+                %dt
+                  %i.bi.bi-box-seam.me-1
+                  個数
+                - if earliest_stock
+                  %dd.fw-bold= "#{ingredient.total_quantity}個"
+                - else
+                  %dd.text-body-secondary 未登録
+              .d-flex.align-items-center.justify-content-between
+                %dt
+                  %i.bi.bi-calendar-event.me-1
+                  賞味期限
+                - if earliest_stock
+                  %dd.fw-bold= l earliest_stock.expire_on
+                - else
+                  %dd.text-body-secondary 未登録
+              - if earliest_stock
+                .d-flex.align-items-center.justify-content-between
+                  %dt
+                    - if ingredient.ingredient_stocks.size > 1
+                      = "ほか#{ingredient.ingredient_stocks.size - 1}件"
+                  %dd
+                    %span.badge{class: "text-bg-#{color}"}= earliest_stock.remaining_days_label
             - if current_user && current_user.id == ingredient.user_id
               .d-flex.gap-3.justify-content-end.card-icon.position-relative{style: 'z-index: 5;'}
                 = link_to edit_ingredient_path(ingredient), class: 'btn btn-outline-success position-relative', style: 'z-index: 5;' do
