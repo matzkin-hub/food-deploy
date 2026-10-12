@@ -3,8 +3,9 @@
     %i.bi.bi-arrow-left
     戻る
   %h1= @ingredient.name
-  - if current_user && current_user.id ==  @ingredient.user.id
-    =link_to '賞味期限/個数', new_ingredient_ingredient_stock_path(@ingredient), class: 'btn btn-success mb-3 mt-3'
+  .d-flex.gap-3.mb-3.mt-3
+    = link_to '賞味期限/個数', new_ingredient_ingredient_stock_path(@ingredient), class: 'btn btn-success'
+    = link_to '食材名編集', edit_ingredient_path(@ingredient), class: 'btn btn-outline-success'
   .d-flex.gap-4.flex-column
     - @ingredient.ingredient_stocks.order(expire_on: :asc, updated_at: :desc).each do |stock|
       %div.card.width-card
@@ -21,7 +22,6 @@
           %li.list-group-item
             更新日
             = l stock.updated_at, format: :long
-        - if current_user && current_user.id ==  @ingredient.user.id
-          .card-body.d-flex.gap-3.justify-content-end
-            = link_to '編集', edit_ingredient_ingredient_stock_path(@ingredient, stock), class: 'btn btn-info'
-            = button_to '削除', ingredient_ingredient_stock_path(@ingredient, stock), method: :delete, data: {turbo_confirm: '本当に削除しますか？'}, class: 'btn btn-danger'
+        .card-body.d-flex.gap-3.justify-content-end
+          = link_to '編集', edit_ingredient_ingredient_stock_path(@ingredient, stock), class: 'btn btn-info'
+          = button_to '削除', ingredient_ingredient_stock_path(@ingredient, stock), method: :delete, data: {turbo_confirm: '本当に削除しますか？'}, class: 'btn btn-danger'
