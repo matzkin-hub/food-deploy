@@ -7,6 +7,8 @@ class IngredientStocksController < ApplicationController
     @ingredient_stock = @ingredient.ingredient_stocks.build
   end
 
+  def edit; end
+
   def create
     @ingredient_stock = @ingredient.ingredient_stocks.build(set_params)
     if @ingredient_stock.save
@@ -15,9 +17,6 @@ class IngredientStocksController < ApplicationController
       flash.now[:alert] = '在庫の登録に失敗しました'
       render :new, status: :unprocessable_entity
     end
-  end
-
-  def edit
   end
 
   def update
@@ -44,7 +43,7 @@ class IngredientStocksController < ApplicationController
   end
 
   def set_id
-    @ingredient = current_user.ingredients.find(params[:ingredient_id])
+    @ingredient = Ingredient.find(params[:ingredient_id])
   end
 
   def set_ingredient_stock
