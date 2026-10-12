@@ -6,7 +6,7 @@ class IngredientStock < ApplicationRecord
   validates :quantity, presence: true
 
   validates :quantity, numericality: {
-    greater_than: 0
+    greater_than_or_equal_to: 0
   }
 
   def status_color

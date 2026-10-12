@@ -2,8 +2,14 @@
 
 class IngredientsController < ApplicationController
   before_action :set_id, only: %i[edit update destroy] # 特定のユーザしかできないアクション
+  skip_before_action :authenticate_user!, only: %i[index show]
   def index
     @ingredients = current_user.ingredients.left_joins(:ingredient_stocks).includes(:ingredient_stocks).group('ingredients.id').order('MIN(ingredient_stocks.expire_on) ASC NULLS LAST').page(params[:page]).per(8)
+  end
+
+  def show
+    @ingredient = Ingredient.find(params[:id])
+    redirect_to ingredients_path and return unless @ingredient.user == current_user
   end
 
   def new
@@ -37,11 +43,6 @@ class IngredientsController < ApplicationController
     else
       render :index
     end
-  end
-
-  def show
-    @ingredient = Ingredient.find(params[:id])
-    redirect_to ingredients_path and return unless @ingredient.user == current_user
   end
 
   private
