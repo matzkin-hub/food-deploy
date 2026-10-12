@@ -1,43 +1,52 @@
-.container
-  .navbar.navbar-expand-lg.bg-white
-    .container-fluid
-  = paginate @ingredients
-  = link_to '食材の新規登録', new_ingredient_path, class: 'btn btn-success mb-3'
-  .row.g-3
+.d-flex.flex-wrap.gap-2.mb-4
+  - { 'danger' => '明日まで', 'warning' => '4日以内', 'primary' => '7日以内', 'success' => 'まだ大丈夫' }.each do |color, label|
+    %span.badge.rounded-pill.border.border-2.border-dark{class: "text-bg-#{color}"}= label
+
+- if @ingredients.empty?
+  %div{class: pop_card('text-center mx-auto')}
+    .card-body.p-5.fw-bold
+      %i.bi.bi-basket3-fill.display-1.text-danger.d-block
+      まだ食材がありません。
+      %br
+      右下の「＋」から登録しよう！
+- else
+  .row.row-cols-1.row-cols-sm-2.row-cols-xl-3.g-4
     - @ingredients.each do |ingredient|
       - earliest_stock = ingredient.earliest_stock
-      - color = earliest_stock ? earliest_stock.status_color : 'secondary'
+      - color = stock_color(earliest_stock)
 
-      .col-lg-3.mb-6.text-center.justify-content-center
-        .card.position-relative.h-100{class: " bg-#{color}-subtle border-3 parent-box", style: 'min-height: 280px;'}
-          - if ingredient.image.attached?
-            = image_tag ingredient.image, class: 'card-img-top', style: 'height: 150px; object-fit: cover;'
-          .card-body.d-flex.flex-column.justify-content-end
-            = link_to ingredient.name, ingredient_path(ingredient), class: 'stretched-link card-title fs-4 text-truncate d-block not-link-style'
-            %dl.stock-summary
-              .d-flex.align-items-center.justify-content-between
-                %dt
-                  %i.bi.bi-box-seam.me-1
-                  個数
+      .col
+        %div{class: pop_card('h-100 overflow-hidden position-relative')}
+          .row.g-0.h-100
+            .col-4.d-flex.align-items-center.justify-content-center.position-relative.border-end.border-3.border-dark{class: "bg-#{color}"}
+              - if ingredient.image.attached?
+                = image_tag ingredient.image, alt: ingredient.name, class: 'position-absolute top-0 start-0 w-100 h-100 object-fit-cover'
+              - else
+                %i.bi.bi-basket3-fill.display-4.text-white
+            .col-8
+              .card-body.py-3.pe-5
+                = link_to ingredient.name, ingredient_path(ingredient), class: 'stretched-link text-dark text-decoration-none fs-5 fw-bolder text-truncate d-block'
+                .small.text-body-secondary.fw-semibold
+                  更新 #{l ingredient.updated_at.to_date, format: :short}
+                  - if earliest_stock
+                    %i.bi.bi-box-seam.ms-2
+                    = "#{ingredient.total_quantity}個"
                 - if earliest_stock
-                  %dd.fw-bold= "#{ingredient.total_quantity}個"
-                - else
-                  %dd.text-body-secondary 未登録
-              .d-flex.align-items-center.justify-content-between
-                %dt
-                  %i.bi.bi-calendar-event.me-1
-                  賞味期限
-                - if earliest_stock
-                  %dd.fw-bold= l earliest_stock.expire_on
-                - else
-                  %dd.text-body-secondary 未登録
-              - if earliest_stock
-                .d-flex.align-items-center.justify-content-between
-                  %dt
+                  .small.text-body-secondary.fw-semibold
+                    %i.bi.bi-calendar-event
+                    = l earliest_stock.expire_on
+                .d-flex.align-items-center.justify-content-between.gap-2.mt-1
+                  - if earliest_stock
+                    %span.fw-bold.text-nowrap= remaining_days_tag(earliest_stock)
                     - if ingredient.ingredient_stocks.size > 1
-                      = "ほか#{ingredient.ingredient_stocks.size - 1}件"
-                  %dd
-                    %span.badge{class: "text-bg-#{color}"}= earliest_stock.remaining_days_label
-            .d-flex.gap-3.justify-content-end.card-icon.position-relative{style: 'z-index: 5;'}
-              = link_to edit_ingredient_path(ingredient), class: 'btn btn-outline-success position-relative', style: 'z-index: 5;' do
-                %i.bi.bi-pencil-fill
+                      %span.badge.rounded-pill.border.border-2.border-dark.text-dark{class: "bg-#{color}-subtle"}= "ほか#{ingredient.ingredient_stocks.size - 1}件"
+                  - else
+                    %span.small.text-body-secondary.fw-semibold 期限未登録
+          = link_to edit_ingredient_path(ingredient), class: 'btn btn-warning btn-sm rounded-circle border-2 border-dark position-absolute top-0 end-0 m-2 z-3', title: '編集', aria: {label: "#{ingredient.name}を編集"} do
+            %i.bi.bi-pencil-fill
+
+.mt-5
+  = paginate @ingredients
+
+= link_to new_ingredient_path, class: 'btn btn-danger rounded-circle border-3 border-dark shadow position-fixed bottom-0 end-0 m-4 p-3 lh-1 fs-2 z-3', title: '食材の新規登録', aria: {label: '食材の新規登録'} do
+  %i.bi.bi-plus-lg

@@ -1,5 +1,8 @@
-.form-container
-  = simple_form_for ingredient do |f|
-    =f.input :name
-    = f.input :image, as: :file, label: '画像'
-    =f.button :submit, class: 'btn btn-success w-100'
+.row.justify-content-center
+  .col-12.col-md-8.col-lg-5
+    %div{class: pop_card}
+      .card-body.p-4
+        = simple_form_for ingredient do |f|
+          = f.input :name, input_html: { class: 'border-3 border-dark' }
+          = f.input :image, as: :file, label: '画像', input_html: { class: 'border-3 border-dark' }
+          = f.button :submit, class: pop_btn('danger', 'w-100 mt-2')
