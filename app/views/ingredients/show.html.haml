@@ -1,27 +1,50 @@
-.container
-  = link_to ingredients_path, class: 'btn btn-outline-secondary mb-3' do
-    %i.bi.bi-arrow-left
-    戻る
-  %h1= @ingredient.name
-  .d-flex.gap-3.mb-3.mt-3
-    = link_to '賞味期限/個数', new_ingredient_ingredient_stock_path(@ingredient), class: 'btn btn-success'
-    = link_to '食材名編集', edit_ingredient_path(@ingredient), class: 'btn btn-outline-success'
-  .d-flex.gap-4.flex-column
-    - @ingredient.ingredient_stocks.order(expire_on: :asc, updated_at: :desc).each do |stock|
-      %div.card.width-card
-        %div.card-header
-          = stock.quantity
+- color = stock_color(@ingredient.earliest_stock)
+
+= link_to ingredients_path, class: pop_btn('light', 'mb-4') do
+  %i.bi.bi-arrow-left
+  戻る
+
+%div{class: pop_card('overflow-hidden mb-4')}
+  .row.g-0
+    .col-4.col-sm-3.d-flex.align-items-center.justify-content-center.position-relative.border-end.border-3.border-dark{class: "bg-#{color}", style: 'min-height: 8rem;'}
+      - if @ingredient.image.attached?
+        = image_tag @ingredient.image, alt: @ingredient.name, class: 'position-absolute top-0 start-0 w-100 h-100 object-fit-cover'
+      - else
+        %i.bi.bi-basket3-fill.display-3.text-white
+    .col-8.col-sm-9
+      .card-body
+        %h1.fw-bolder.text-break= @ingredient.name
+        .d-flex.flex-wrap.gap-3
+          = link_to new_ingredient_ingredient_stock_path(@ingredient), class: pop_btn('success') do
+            %i.bi.bi-plus-lg
+            賞味期限/個数
+          = link_to edit_ingredient_path(@ingredient), class: pop_btn('light') do
+            %i.bi.bi-pencil-fill
+            食材名編集
+
+.d-flex.gap-4.flex-column
+  - @ingredient.ingredient_stocks.order(expire_on: :asc, updated_at: :desc).each do |stock|
+    - tone = stock_color(stock)
+    %div{class: pop_card}
+      .card-header.d-flex.align-items-center.justify-content-between.border-bottom.border-3.border-dark.rounded-top-3{class: "bg-#{tone}-subtle"}
+        %span.fw-bold
+          %span.display-6.fw-bolder= stock.quantity
           個
-        %ul.list-group.list-group-flush
-          %li.list-group-item
-            賞味期限
-            = l stock.expire_on
-          %li.list-group-item
-            作成日
-            = l stock.created_at, format: :long
-          %li.list-group-item
-            更新日
-            = l stock.updated_at, format: :long
-        .card-body.d-flex.gap-3.justify-content-end
-          = link_to '編集', edit_ingredient_ingredient_stock_path(@ingredient, stock), class: 'btn btn-info'
-          = button_to '削除', ingredient_ingredient_stock_path(@ingredient, stock), method: :delete, data: {turbo_confirm: '本当に削除しますか？'}, class: 'btn btn-danger'
+        %span.badge.rounded-pill.border.border-2.border-dark.fs-6{class: "text-bg-#{tone}"}= stock.remaining_days_label
+      %ul.list-group.list-group-flush
+        %li.list-group-item.fw-semibold
+          賞味期限
+          = l stock.expire_on
+        %li.list-group-item.fw-semibold
+          作成日
+          = l stock.created_at, format: :long
+        %li.list-group-item.fw-semibold
+          更新日
+          = l stock.updated_at, format: :long
+      .card-body.d-flex.gap-3.justify-content-end
+        = link_to edit_ingredient_ingredient_stock_path(@ingredient, stock), class: pop_btn('info') do
+          %i.bi.bi-pencil-fill
+          編集
+        = button_to ingredient_ingredient_stock_path(@ingredient, stock), method: :delete, data: {turbo_confirm: '本当に削除しますか？'}, class: pop_btn('danger') do
+          %i.bi.bi-trash3-fill
+          削除

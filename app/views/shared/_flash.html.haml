@@ -1,3 +1,4 @@
 - flash.each do |type, message|
-  %div{class: "alert alert-#{type == 'notice' ? 'success' : 'danger'}"}
-    = message
+  .container.mt-3
+    %div{class: "alert alert-#{type == 'notice' ? 'success' : 'danger'} border-3 border-dark rounded-4 shadow-sm fw-bold mb-0"}
+      = message

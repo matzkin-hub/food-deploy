@@ -1,15 +1,14 @@
-%header.sticky-top
-  .navbar.navbar-expand-lg.bg-body-tertiary
-    .container-fluid
-      = link_to 'food', ingredients_path, class: 'navbar-brand btn btn-light'
-      %button.navbar-toggler{ type: "button", data: {bs_toggle: "collapse", bs_target: "#navbarNavDropdown", aria_controls: "navbarNavDropdown", aria_expanded: "false", aria_label: "Toggle navigation"} }
-        %span.navbar-toggler-icon
-      #navbarNavDropdown.collapse.navbar-collapse
-        %ul.navbar-nav.mb-2.ms-auto.text-end.my-3
-          - if user_signed_in?
-            %li.nav-item
-              = button_to 'ログアウト', destroy_user_session_path, method: :delete, data: {turbo: false}, class: 'btn btn-danger'
-          - else
-            %li.nav-item.d-flex.flex-column
-              = link_to 'ログイン', new_user_session_path, class: 'btn btn-light'
-              = link_to '新規登録', new_user_registration_path, class: 'btn btn-light'
+%header.sticky-top.bg-warning.border-bottom.border-3.border-dark
+  .container.d-flex.align-items-center.justify-content-between.py-2
+    = link_to ingredients_path, class: 'navbar-brand d-flex align-items-center gap-2 fw-bolder fs-3 m-0' do
+      %span.badge.rounded-circle.text-bg-danger.border.border-3.border-dark.fs-5
+        %i.bi.bi-basket3-fill
+      food
+    .d-flex.align-items-center.gap-2
+      - if user_signed_in?
+        = button_to destroy_user_session_path, method: :delete, data: {turbo_confirm: '本当にログアウトしますか？'}, class: pop_btn('light', 'btn-sm') do
+          %i.bi.bi-box-arrow-right
+          ログアウト
+      - else
+        = link_to 'ログイン', new_user_session_path, class: pop_btn('light', 'btn-sm')
+        = link_to '新規登録', new_user_registration_path, class: pop_btn('danger', 'btn-sm')
