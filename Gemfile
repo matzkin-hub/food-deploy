@@ -4,6 +4,7 @@ source 'https://rubygems.org'
 
 gem 'sgcop', github: 'SonicGarden/sgcop', branch: 'main'
 
+gem 'aws-sdk-s3'
 gem 'bootsnap', require: false
 gem 'cssbundling-rails'
 gem 'devise'
@@ -25,7 +26,6 @@ gem 'stimulus-rails'
 gem 'thruster', require: false
 gem 'turbo-rails'
 gem 'tzinfo-data', platforms: %i[windows jruby]
-gem 'aws-sdk-s3'
 
 group :development, :test do
   gem 'brakeman', require: false

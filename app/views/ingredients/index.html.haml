@@ -2,8 +2,7 @@
   .navbar.navbar-expand-lg.bg-white
     .container-fluid
   = paginate @ingredients
-  - if current_user
-    = link_to '食材の新規登録', new_ingredient_path, class: 'btn btn-success mb-3'
+  = link_to '食材の新規登録', new_ingredient_path, class: 'btn btn-success mb-3'
   .row.g-3
     - @ingredients.each do |ingredient|
       - earliest_stock = ingredient.earliest_stock
@@ -39,7 +38,6 @@
                       = "ほか#{ingredient.ingredient_stocks.size - 1}件"
                   %dd
                     %span.badge{class: "text-bg-#{color}"}= earliest_stock.remaining_days_label
-            - if current_user && current_user.id == ingredient.user_id
-              .d-flex.gap-3.justify-content-end.card-icon.position-relative{style: 'z-index: 5;'}
-                = link_to edit_ingredient_path(ingredient), class: 'btn btn-outline-success position-relative', style: 'z-index: 5;' do
-                  %i.bi.bi-pencil-fill
+            .d-flex.gap-3.justify-content-end.card-icon.position-relative{style: 'z-index: 5;'}
+              = link_to edit_ingredient_path(ingredient), class: 'btn btn-outline-success position-relative', style: 'z-index: 5;' do
+                %i.bi.bi-pencil-fill
