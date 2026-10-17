@@ -2,7 +2,6 @@
 
 class IngredientStock < ApplicationRecord
   belongs_to :ingredient
-  validates :expire_on, presence: true
   validates :quantity, presence: true
 
   validates :quantity, numericality: {
@@ -10,6 +9,8 @@ class IngredientStock < ApplicationRecord
   }
 
   def status_color
+    return 'secondary' if expire_on.nil?
+
     if expire_on <= 1.day.from_now.to_date
       'danger'
     elsif expire_on <= 4.days.from_now.to_date
@@ -22,12 +23,16 @@ class IngredientStock < ApplicationRecord
   end
 
   def remaining_days
+    return if expire_on.nil?
+
     (expire_on - Date.current).to_i
   end
 
   def remaining_days_label
     days = remaining_days
-    if days.negative?
+    if days.nil?
+      '期限なし'
+    elsif days.negative?
       "#{days.abs}日超過"
     elsif days.zero?
       '今日まで'
