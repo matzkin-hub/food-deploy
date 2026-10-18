@@ -1,0 +1,29 @@
+= link_to tasklists_path, class: pop_btn('light', 'mb-4') do
+  %i.bi.bi-arrow-left
+  戻る
+
+%div{class: pop_card('overflow-hidden')}
+  .card-header.d-flex.align-items-center.justify-content-between.border-bottom.border-3.border-dark.rounded-top-3{class: @tasklist.checked? ? 'bg-success-subtle' : 'bg-warning-subtle'}
+    %h1.fw-bolder.text-break.fs-3.mb-0= @tasklist.title
+    %span.badge.rounded-pill.border.border-2.border-dark.fs-6{class: @tasklist.checked? ? 'text-bg-success' : 'text-bg-secondary'}= @tasklist.checked? ? '購入済み' : '未購入'
+  %ul.list-group.list-group-flush
+    %li.list-group-item.fw-semibold
+      個数
+      %span.fs-4.fw-bolder= @tasklist.quantity
+      個
+    %li.list-group-item.fw-semibold
+      登録者
+      = @tasklist.user.email
+    %li.list-group-item.fw-semibold
+      作成日
+      = l @tasklist.created_at, format: :long
+    %li.list-group-item.fw-semibold
+      更新日
+      = l @tasklist.updated_at, format: :long
+  .card-body.d-flex.gap-3.justify-content-end
+    = link_to edit_tasklist_path(@tasklist), class: pop_btn('info') do
+      %i.bi.bi-pencil-fill
+      編集
+    = button_to tasklist_path(@tasklist), method: :delete, data: {turbo_confirm: '本当に削除しますか？'}, class: pop_btn('danger') do
+      %i.bi.bi-trash3-fill
+      削除
