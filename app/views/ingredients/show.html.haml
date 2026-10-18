@@ -23,7 +23,7 @@
             食材名編集
 
 .d-flex.gap-4.flex-column
-  - @ingredient.ingredient_stocks.order(expire_on: :asc, updated_at: :desc).each do |stock|
+  - @ingredient.ingredient_stocks.order(Arel.sql('expire_on ASC NULLS LAST'), updated_at: :desc).each do |stock|
     - tone = stock_color(stock)
     %div{class: pop_card}
       .card-header.d-flex.align-items-center.justify-content-between.border-bottom.border-3.border-dark.rounded-top-3{class: "bg-#{tone}-subtle"}
@@ -34,7 +34,7 @@
       %ul.list-group.list-group-flush
         %li.list-group-item.fw-semibold
           賞味期限
-          = l stock.expire_on
+          = stock.expire_on ? l(stock.expire_on) : '未設定'
         %li.list-group-item.fw-semibold
           作成日
           = l stock.created_at, format: :long

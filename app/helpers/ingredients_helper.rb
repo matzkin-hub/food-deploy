@@ -12,6 +12,8 @@ module IngredientsHelper
 
   # 「あと 3 日」のように日数部分だけ大きく表示する
   def remaining_days_tag(stock)
+    return if stock.expire_on.nil?
+
     days = stock.remaining_days
     number = tag.span(days.abs, class: "display-6 fw-bolder text-#{stock_color(stock)}-emphasis")
 

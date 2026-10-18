@@ -1,6 +1,10 @@
-.d-flex.flex-wrap.gap-2.mb-4
-  - { 'danger' => '明日まで', 'warning' => '4日以内', 'primary' => '7日以内', 'success' => 'まだ大丈夫' }.each do |color, label|
-    %span.badge.rounded-pill.border.border-2.border-dark{class: "text-bg-#{color}"}= label
+.d-flex.flex-wrap.align-items-center.justify-content-between.gap-2.mb-4
+  .d-flex.flex-wrap.gap-2
+    - { 'danger' => '明日まで', 'warning' => '4日以内', 'primary' => '7日以内', 'success' => 'まだ大丈夫' }.each do |color, label|
+      %span.badge.rounded-pill.border.border-2.border-dark{class: "text-bg-#{color}"}= label
+  = link_to tasklists_path, class: pop_btn('light', 'btn-sm') do
+    %i.bi.bi-cart-fill
+    タスク管理
 
 - if @ingredients.empty?
   %div{class: pop_card('text-center mx-auto')}

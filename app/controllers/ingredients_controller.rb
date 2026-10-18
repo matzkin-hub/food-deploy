@@ -26,7 +26,7 @@ class IngredientsController < ApplicationController
 
   def update
     if @ingredient.update(ingredient_params)
-      redirect_to ingredient_path(@ingredient), notice: '食材名の変更に成功しました'
+      redirect_to ingredients_path, notice: '食材名の変更に成功しました'
     else
       render :edit
     end

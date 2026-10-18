@@ -1,0 +1,24 @@
+= link_to ingredients_path, class: pop_btn('light', 'mb-4') do
+  %i.bi.bi-arrow-left
+  食材一覧
+
+- if @tasklists.empty?
+  %div{class: pop_card('text-center mx-auto')}
+    .card-body.p-5.fw-bold
+      %i.bi.bi-cart-fill.display-1.text-danger.d-block
+      買うものはありません。
+      %br
+      右下の「＋」から追加しよう！
+- else
+  .d-flex.gap-3.flex-column
+    - @tasklists.each do |tasklist|
+      %div{class: pop_card('overflow-hidden position-relative')}
+        .card-body.d-flex.align-items-center.gap-3.py-3{class: tasklist.checked? ? 'bg-secondary-subtle' : nil}
+          - label = tasklist.checked? ? '未購入に戻す' : '購入済みにする'
+          = button_to tasklist_path(tasklist), method: :patch, params: { tasklist: { checked: !tasklist.checked? } }, class: 'btn btn-link p-0 border-0 lh-1 position-relative z-3', title: label, aria: { label: "#{tasklist.title}を#{label}" } do
+            %i.bi.fs-3{class: tasklist.checked? ? 'bi-check-square-fill text-success' : 'bi-square text-dark'}
+          = link_to tasklist.title, tasklist_path(tasklist), class: "stretched-link text-dark text-decoration-none fs-5 fw-bolder text-break flex-grow-1#{' text-decoration-line-through text-body-secondary' if tasklist.checked?}"
+          %span.badge.rounded-pill.border.border-2.border-dark.text-bg-warning.fs-6.text-nowrap= "#{tasklist.quantity}個"
+
+= link_to new_tasklist_path, class: 'btn btn-danger rounded-circle border-3 border-dark shadow position-fixed bottom-0 end-0 m-4 p-3 lh-1 fs-2 z-3', title: 'タスクの新規登録', aria: {label: 'タスクの新規登録'} do
+  %i.bi.bi-plus-lg

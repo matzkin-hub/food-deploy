@@ -21,7 +21,7 @@ class IngredientStocksController < ApplicationController
 
   def update
     if @ingredient_stock.update(set_params)
-      redirect_to ingredient_path(@ingredient), notice: '在庫の変更に成功しました'
+      redirect_to ingredients_path, notice: '在庫の変更に成功しました'
     else
       flash.now[:alert] = '在庫の変更に失敗しました'
       render :edit, status: :unprocessable_entity

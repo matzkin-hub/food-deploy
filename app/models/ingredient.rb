@@ -12,6 +12,6 @@ class Ingredient < ApplicationRecord
   end
 
   def earliest_stock
-    ingredient_stocks.min_by(&:expire_on)
+    ingredient_stocks.reject { |s| s.expire_on.nil? }.min_by(&:expire_on)
   end
 end

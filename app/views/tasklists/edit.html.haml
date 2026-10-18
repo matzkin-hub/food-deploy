@@ -1,0 +1,6 @@
+= link_to tasklist_path(@tasklist), class: pop_btn('light', 'mb-4') do
+  %i.bi.bi-arrow-left
+  戻る
+%div
+  .d-inline-block.bg-warning.border.border-3.border-dark.rounded-pill.px-4.py-2.fs-4.fw-bolder.shadow-sm.mb-4 タスク編集
+= render 'form', tasklist: @tasklist
