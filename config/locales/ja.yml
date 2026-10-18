@@ -6,6 +6,10 @@ ja:
       ingredient_stock:
         quantity: 個数
         expire_on: 賞味期限
+      tasklist:
+        title: タスク名
+        quantity: 個数
+        checked: 購入済み
       user:
         confirmation_sent_at: パスワード確認送信時刻
         confirmation_token: パスワード確認用トークン

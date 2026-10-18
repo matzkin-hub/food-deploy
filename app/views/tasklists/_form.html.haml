@@ -1,0 +1,9 @@
+.row.justify-content-center
+  .col-12.col-md-8.col-lg-5
+    %div{class: pop_card}
+      .card-body.p-4
+        = simple_form_for tasklist do |f|
+          = f.input :title, input_html: { class: 'border-3 border-dark' }
+          = f.input :quantity, as: :select, collection: (1..99), include_blank: false, input_html: { class: 'border-3 border-dark' }
+          = f.input :checked, as: :boolean, input_html: { class: 'border-3 border-dark' }
+          = f.button :submit, class: pop_btn('danger', 'w-100 mt-2')
